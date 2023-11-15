@@ -8,9 +8,13 @@
 import UIKit
 import SnapKit
 import GoogleMaps
+import GooglePlaces
+import SwifterSwift
 
 class MapViewController: UIViewController {
-
+    
+    @IBOutlet weak var stackView: UIStackView!
+    
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
@@ -18,6 +22,8 @@ class MapViewController: UIViewController {
     
     
     var mapView: GMSMapView!
+    let infoMarker = GMSMarker()
+    var placesClient: GMSPlacesClient!
     var locationManager: CLLocationManager!
     var startLocation: CLLocation?
     var selectedDestination: CLLocationCoordinate2D?
@@ -27,8 +33,15 @@ class MapViewController: UIViewController {
     var preciseLocationZoomLevel: Float = 15.0
     var approximateLocationZoomLevel: Float = 10.0
     
+    
+//    var likelyPlaces: [GMSPlace] = []
+//
+//    var selectedPlace: GMSPlace?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        placesClient = GMSPlacesClient.shared()
         setupLocationManager()
         setupMapView()
     }
@@ -42,6 +55,10 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
+//    func setupPlacesClient() {
+//        placesClient = GMSPlacesClient.shared()Z
+//    }
+    
     func setupMapView() {
         let position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
         let options = GMSMapViewOptions()
@@ -51,21 +68,30 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
-        view.insertSubview(mapView, at: 0)
-        mapView.snp.makeConstraints { make in
-            make.top.leading.right.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top)
-        }
+        stackView.insertArrangedSubview(mapView, at: 0)
         mapView.isHidden = true
-        
-        // setup marker
-//        let marker = GMSMarker()
-//        marker.position = position
-//        marker.title = "Sydney"
-//        marker.snippet = "Australia"
-//        marker.map = mapView
     }
 
+//    func listLikelyPlaces() {
+//        likelyPlaces.removeAll()
+//
+//        let placeFields: GMSPlaceField = [.name, .coordinate]
+//        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: placeFields) { placeLikelyhoods, error in
+//            guard error == nil else {
+//                print("Current Place error: \(error!.localizedDescription)")
+//                return
+//            }
+//            guard let placeLikelyhoods = placeLikelyhoods else {
+//                print("No places found.")
+//                return
+//            }
+//            for likelyhood in placeLikelyhoods {
+//                let place = likelyhood.place
+//                self.likelyPlaces.append(place)
+//            }
+//        }
+//    }
+    
     // 设置在地图上的目的地
     func setDestinationOnMap() {
         // TODO: 实现允许用户在地图上选择目的地的代码
@@ -97,7 +123,38 @@ class MapViewController: UIViewController {
 
 extension MapViewController: GMSMapViewDelegate {
     
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        print("didTapAt coordinate: \(coordinate)")
+        bottomView.isHidden = true
+    }
     
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("didTap marker: \(marker)")
+        return false
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTap overlay: GMSOverlay) {
+        print("didTap overlay: \(overlay)")
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapPOIWithPlaceID placeID: String, name: String, location: CLLocationCoordinate2D) {
+        print("didTapPOIWithPlaceID: \(placeID), name: \(name), location: \(location)")
+        
+//        infoMarker.snippet = placeID
+//        infoMarker.position = location
+//        infoMarker.title = name
+//        infoMarker.opacity = 0;
+//        infoMarker.infoWindowAnchor.y = 1
+//        infoMarker.map = mapView
+//        mapView.selectedMarker = infoMarker
+        
+        
+        bottomView.isHidden = false
+        destinationLabel.text = name
+        let location = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        let distance = locationManager.location!.distance(from: location)
+        distanceLabel.text = "距你 \(distance.int) 米"
+    }
     
 }
 
@@ -118,8 +175,10 @@ extension MapViewController: CLLocationManagerDelegate {
             mapView.isHidden = false
             mapView.camera = camera
         } else {
-            mapView.animate(to: camera)
+//            mapView.animate(to: camera)
         }
+        
+//        listLikelyPlaces()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

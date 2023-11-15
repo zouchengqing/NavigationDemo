@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,55 +17,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRh-RD-mjW">
-                                <rect key="frame" x="0.0" y="679" width="393" height="173"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UMe-1Z-EAB">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目的地" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2W-go-1gC">
-                                        <rect key="frame" x="16" y="16" width="67" height="27"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="距你 100 米" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tw-jL-YJn">
-                                        <rect key="frame" x="16" y="53" width="89" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUW-1w-WMp">
-                                        <rect key="frame" x="165.66666666666666" y="104" width="62" height="35"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Start"/>
-                                        <connections>
-                                            <action selector="startButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bbf-T7-hQh"/>
-                                        </connections>
-                                    </button>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRh-RD-mjW">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目的地" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2W-go-1gC">
+                                                <rect key="frame" x="16" y="16" width="67" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="距你 100 米" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tw-jL-YJn">
+                                                <rect key="frame" x="16" y="26" width="89" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUW-1w-WMp">
+                                                <rect key="frame" x="166" y="56" width="61.333333333333343" height="0.0"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Start"/>
+                                                <connections>
+                                                    <action selector="startButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bbf-T7-hQh"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <viewLayoutGuide key="safeArea" id="em1-TW-jlg"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="0tw-jL-YJn" firstAttribute="top" secondItem="O2W-go-1gC" secondAttribute="bottom" constant="10" id="Ctt-Aa-Tks"/>
+                                            <constraint firstItem="O2W-go-1gC" firstAttribute="top" secondItem="yRh-RD-mjW" secondAttribute="top" constant="16" id="ECe-m2-DtV"/>
+                                            <constraint firstItem="em1-TW-jlg" firstAttribute="bottom" secondItem="EUW-1w-WMp" secondAttribute="bottom" id="MJw-vT-MXQ"/>
+                                            <constraint firstItem="EUW-1w-WMp" firstAttribute="centerX" secondItem="yRh-RD-mjW" secondAttribute="centerX" id="Xbx-Cs-qQX"/>
+                                            <constraint firstItem="EUW-1w-WMp" firstAttribute="top" secondItem="0tw-jL-YJn" secondAttribute="bottom" constant="30" id="gE3-RZ-sM7"/>
+                                            <constraint firstItem="O2W-go-1gC" firstAttribute="leading" secondItem="yRh-RD-mjW" secondAttribute="leading" constant="16" id="jhI-cz-vgG"/>
+                                            <constraint firstItem="0tw-jL-YJn" firstAttribute="leading" secondItem="O2W-go-1gC" secondAttribute="leading" id="kow-5n-x5n"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <viewLayoutGuide key="safeArea" id="em1-TW-jlg"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="0tw-jL-YJn" firstAttribute="top" secondItem="O2W-go-1gC" secondAttribute="bottom" constant="10" id="Ctt-Aa-Tks"/>
-                                    <constraint firstItem="O2W-go-1gC" firstAttribute="top" secondItem="yRh-RD-mjW" secondAttribute="top" constant="16" id="ECe-m2-DtV"/>
-                                    <constraint firstItem="em1-TW-jlg" firstAttribute="bottom" secondItem="EUW-1w-WMp" secondAttribute="bottom" id="MJw-vT-MXQ"/>
-                                    <constraint firstItem="EUW-1w-WMp" firstAttribute="centerX" secondItem="yRh-RD-mjW" secondAttribute="centerX" id="Xbx-Cs-qQX"/>
-                                    <constraint firstItem="EUW-1w-WMp" firstAttribute="top" secondItem="0tw-jL-YJn" secondAttribute="bottom" constant="30" id="gE3-RZ-sM7"/>
-                                    <constraint firstItem="O2W-go-1gC" firstAttribute="leading" secondItem="yRh-RD-mjW" secondAttribute="leading" constant="16" id="jhI-cz-vgG"/>
-                                    <constraint firstItem="0tw-jL-YJn" firstAttribute="leading" secondItem="O2W-go-1gC" secondAttribute="leading" id="kow-5n-x5n"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="yRh-RD-mjW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3UD-qx-0i6"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yRh-RD-mjW" secondAttribute="trailing" id="Oas-PY-rLw"/>
-                            <constraint firstAttribute="bottom" secondItem="yRh-RD-mjW" secondAttribute="bottom" id="zNA-If-Kr2"/>
+                            <constraint firstItem="UMe-1Z-EAB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Gzx-zw-nRo"/>
+                            <constraint firstItem="UMe-1Z-EAB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eZI-qM-90g"/>
+                            <constraint firstAttribute="trailing" secondItem="UMe-1Z-EAB" secondAttribute="trailing" id="m04-64-oCh"/>
+                            <constraint firstAttribute="bottom" secondItem="UMe-1Z-EAB" secondAttribute="bottom" id="zKa-f4-N67"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="yRh-RD-mjW" id="CXm-Hc-58w"/>
                         <outlet property="destinationLabel" destination="O2W-go-1gC" id="62R-dV-r90"/>
                         <outlet property="distanceLabel" destination="0tw-jL-YJn" id="JmS-mN-mvR"/>
+                        <outlet property="stackView" destination="UMe-1Z-EAB" id="tKD-YG-20R"/>
                         <outlet property="startButton" destination="EUW-1w-WMp" id="eve-D6-uHg"/>
                     </connections>
                 </viewController>
