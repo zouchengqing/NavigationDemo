@@ -4,6 +4,8 @@ PODS:
   - GoogleMaps/Base (8.3.0)
   - GoogleMaps/Maps (8.3.0):
     - GoogleMaps/Base
+  - GoogleNavigation (5.3.0):
+    - GoogleMaps (= 8.3.0)
   - GooglePlaces (8.3.0)
   - ReachabilitySwift (5.0.0)
   - RxCocoa (6.5.0):
@@ -42,6 +44,7 @@ PODS:
 
 DEPENDENCIES:
   - GoogleMaps
+  - GoogleNavigation
   - GooglePlaces
   - ReachabilitySwift
   - RxCocoa
@@ -53,6 +56,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - GoogleMaps
+    - GoogleNavigation
     - GooglePlaces
     - ReachabilitySwift
     - RxCocoa
@@ -64,6 +68,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   GoogleMaps: 54762190c9741867d03e4e4218672ab5a0a8096b
+  GoogleNavigation: b598a9087a5f69c87d24dc123eeab3de9b8d81a4
   GooglePlaces: b922e192c50994436900ef14d19f84971950250b
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -73,6 +78,6 @@ SPEC CHECKSUMS:
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 6a8313c6b8711bfb50cf95387d752a95110ffb86
+PODFILE CHECKSUM: ef48a570afb6f5d97b89882da05cf31b4d994656
 
 COCOAPODS: 1.12.1

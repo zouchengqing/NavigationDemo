@@ -8,6 +8,7 @@ target 'NavigationDemo' do
   # Pods for NavigationDemo
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'GoogleNavigation'
   pod 'RxSwift'
   pod 'SnapKit'
   pod 'RxCocoa'
