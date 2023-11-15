@@ -9,13 +9,15 @@ import UIKit
 import SnapKit
 import GoogleMaps
 
-
-
 class MapViewController: UIViewController {
 
-    var mapView: GMSMapView!
+    @IBOutlet weak var destinationLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var bottomView: UIView!
     
+    
+    var mapView: GMSMapView!
     var locationManager: CLLocationManager!
     var startLocation: CLLocation?
     var selectedDestination: CLLocationCoordinate2D?
@@ -51,7 +53,8 @@ class MapViewController: UIViewController {
         mapView.isMyLocationEnabled = true
         view.insertSubview(mapView, at: 0)
         mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.right.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
         mapView.isHidden = true
         
