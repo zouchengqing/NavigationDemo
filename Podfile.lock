@@ -38,6 +38,7 @@ PODS:
   - SwifterSwift/StoreKit (5.2.0)
   - SwifterSwift/SwiftStdlib (5.2.0)
   - SwifterSwift/UIKit (5.2.0)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - GoogleMaps
@@ -47,6 +48,7 @@ DEPENDENCIES:
   - RxSwift
   - SnapKit
   - SwifterSwift
+  - SwiftyJSON
 
 SPEC REPOS:
   trunk:
@@ -58,6 +60,7 @@ SPEC REPOS:
     - RxSwift
     - SnapKit
     - SwifterSwift
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   GoogleMaps: 54762190c9741867d03e4e4218672ab5a0a8096b
@@ -68,7 +71,8 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: fa912a8bbf580d1dd5ef2d72564af71007d00ce3
+PODFILE CHECKSUM: 6a8313c6b8711bfb50cf95387d752a95110ffb86
 
 COCOAPODS: 1.12.1

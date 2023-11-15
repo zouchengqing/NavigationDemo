@@ -13,5 +13,6 @@ target 'NavigationDemo' do
   pod 'RxCocoa'
   pod 'ReachabilitySwift'
   pod 'SwifterSwift'
+  pod 'SwiftyJSON'
 
 end
