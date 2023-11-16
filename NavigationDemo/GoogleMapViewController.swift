@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 import GoogleMaps
-import GooglePlaces
 import SwifterSwift
 import SwiftyJSON
+import GoogleNavigation
 
-class MapViewController: UIViewController {
+class GoogleMapViewController: UIViewController {
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -21,31 +21,23 @@ class MapViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
     
-    
     var mapView: GMSMapView!
     let infoMarker = GMSMarker()
     
     var polyline: GMSPolyline?
     
-    var placesClient: GMSPlacesClient!
     var locationManager: CLLocationManager!
     var startLocation: CLLocation?
-    var selectedDestination: CLLocationCoordinate2D?
+    // (placeId, name, coordinate)
+    var selectedDestination: (String, String, CLLocationCoordinate2D)?
     var isNavigating = false
     var tripStartTimer: Date?
     
     var preciseLocationZoomLevel: Float = 15.0
     var approximateLocationZoomLevel: Float = 10.0
     
-    
-//    var likelyPlaces: [GMSPlace] = []
-//
-//    var selectedPlace: GMSPlace?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        placesClient = GMSPlacesClient.shared()
         setupLocationManager()
         setupMapView()
     }
@@ -59,10 +51,6 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-//    func setupPlacesClient() {
-//        placesClient = GMSPlacesClient.shared()Z
-//    }
-    
     func setupMapView() {
         let position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
         let options = GMSMapViewOptions()
@@ -74,43 +62,64 @@ class MapViewController: UIViewController {
         mapView.isMyLocationEnabled = true
         stackView.insertArrangedSubview(mapView, at: 0)
         mapView.isHidden = true
-    }
-
-//    func listLikelyPlaces() {
-//        likelyPlaces.removeAll()
-//
-//        let placeFields: GMSPlaceField = [.name, .coordinate]
-//        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: placeFields) { placeLikelyhoods, error in
-//            guard error == nil else {
-//                print("Current Place error: \(error!.localizedDescription)")
-//                return
-//            }
-//            guard let placeLikelyhoods = placeLikelyhoods else {
-//                print("No places found.")
-//                return
-//            }
-//            for likelyhood in placeLikelyhoods {
-//                let place = likelyhood.place
-//                self.likelyPlaces.append(place)
-//            }
-//        }
-//    }
-    
-    // 设置在地图上的目的地
-    func setDestinationOnMap() {
-        // TODO: 实现允许用户在地图上选择目的地的代码
         
+//        mapView.navigator
     }
     
+    // 开始按钮
     @IBAction func startButtonClicked(_ sender: UIButton) {
-        if let destination = selectedDestination {
-            isNavigating = true
-            tripStartTimer = Date()
-            startLocation = locationManager.location
-            
-            // TODO: 实现启动导航朝向选择的目的地的代码
-        } else {
-            // TODO: 显示错误或提示用户选择目的地
+        checkAuthorization { authorized in
+            if authorized {
+                // 如果有选中目的地
+                if let destination = self.selectedDestination {
+                    self.mapView.isNavigationEnabled = true
+                    self.mapView.settings.compassButton = true
+                    self.mapView.navigator?.add(self)
+                    self.locationManager.requestAlwaysAuthorization()
+                    
+                    
+                    self.isNavigating = true
+                    self.tripStartTimer = Date()
+                    self.startLocation = self.locationManager.location
+                    
+                    // 开始导航
+                    var destinations: [GMSNavigationWaypoint] = []
+                    destinations.append(GMSNavigationWaypoint(placeID: destination.0, title: destination.1)!)
+                    self.mapView.navigator?.setDestinations(destinations, callback: { routeStatus in
+                        guard routeStatus == .OK else {
+                            print("Handle route status that are not OK.")
+                            return
+                        }
+                        self.mapView.navigator?.isGuidanceActive = true
+                        self.mapView.locationSimulator?.simulateLocationsAlongExistingRoute()
+                        self.mapView.cameraMode = .following
+                    })
+                    self.mapView.roadSnappedLocationProvider?.startUpdatingLocation()
+                    
+                    
+                    // TODO: 实现启动导航朝向选择的目的地的代码
+                } else {
+                    // TODO: 显示错误或提示用户选择目的地
+                }
+            }
+        }
+    }
+    
+    func checkAuthorization(_ completion: @escaping (Bool) -> Void) {
+        let companyName = "NavigationDemo"
+        GMSNavigationServices.showTermsAndConditionsDialogIfNeeded(withCompanyName: companyName) { termsAccepted in
+            if termsAccepted {
+                // 授权后台提醒通知
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { granted, error in
+                    if !granted || error != nil {
+                        print("Authorizaiton to deliver notifications was rejected.")
+                    }
+                }
+                completion(true)
+            } else {
+                print("User rejects the terms and conditions.")
+                completion(true)
+            }
         }
     }
     
@@ -125,52 +134,52 @@ class MapViewController: UIViewController {
 
 // MARK: routes 相关
 
-extension MapViewController {
+extension GoogleMapViewController {
     
     // 获取路线信息
-    func getDirections(startLocation: CLLocation, destination: CLLocationCoordinate2D) {
-        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
-        let destination = "\(destination.latitude),\(destination.longitude)"
-        
-        let directionURL = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(APIKey)"
-        
-        URLSession.shared.dataTask(with: URL(string: directionURL)!) { data, response, error in
-            guard let data = data, error == nil else {
-                // 处理请求错误
-                print("Request error: \(error!.localizedDescription)")
-                return
-            }
-            do {
-//                let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                if let jsonDict = json as? [String: Any],
-//                   let routes = jsonDict["routes"] as? [[String: Any]],
-//                   let route = routes.first,
-//                   let overviewPolyline = route["overview_polyline"] as? [String: Any],
-//                   let points = overviewPolyline["points"] as? String {
+//    func getDirections(startLocation: CLLocation, destination: CLLocationCoordinate2D) {
+//        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
+//        let destination = "\(destination.latitude),\(destination.longitude)"
+//
+//        let directionURL = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(APIKey)"
+//
+//        URLSession.shared.dataTask(with: URL(string: directionURL)!) { data, response, error in
+//            guard let data = data, error == nil else {
+//                // 处理请求错误
+//                print("Request error: \(error!.localizedDescription)")
+//                return
+//            }
+//            do {
+////                let json = try JSONSerialization.jsonObject(with: data, options: [])
+////                if let jsonDict = json as? [String: Any],
+////                   let routes = jsonDict["routes"] as? [[String: Any]],
+////                   let route = routes.first,
+////                   let overviewPolyline = route["overview_polyline"] as? [String: Any],
+////                   let points = overviewPolyline["points"] as? String {
+////                    // 解码路线信息
+////                    DispatchQueue.main.async {
+////                        self.drawRoute(encodedPath: points)
+////                    }
+////                }
+//                let json = try JSON(data: data)
+//                if let points = json["routes"][0]["overview_polyline"]["points"].string {
 //                    // 解码路线信息
 //                    DispatchQueue.main.async {
 //                        self.drawRoute(encodedPath: points)
 //                    }
+//                } else {
+//                    print("返回数据格式有误：\(json)")
 //                }
-                let json = try JSON(data: data)
-                if let points = json["routes"][0]["overview_polyline"]["points"].string {
-                    // 解码路线信息
-                    DispatchQueue.main.async {
-                        self.drawRoute(encodedPath: points)
-                    }
-                } else {
-                    print("返回数据格式有误：\(json)")
-                }
-            } catch {
-                // 处理 JSON 解析错误
-                print("JSON 解析错误: \(error.localizedDescription)")
-            }
-        }.resume()
-    }
+//            } catch {
+//                // 处理 JSON 解析错误
+//                print("JSON 解析错误: \(error.localizedDescription)")
+//            }
+//        }.resume()
+//    }
     
     // 绘制路线
-    func drawRoute(encodedPath: String) {
-        let path = GMSPath(fromEncodedPath: encodedPath)
+    func drawRoute(path: GMSPath) {
+//        let path = GMSPath(fromEncodedPath: encodedPath)
         polyline?.map = nil
         polyline = GMSPolyline(path: path)
         polyline?.strokeWidth = 3.0
@@ -183,7 +192,7 @@ extension MapViewController {
 
 // MARK: - GMSMapViewDelegate
 
-extension MapViewController: GMSMapViewDelegate {
+extension GoogleMapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         print("didTapAt coordinate: \(coordinate)")
@@ -202,15 +211,6 @@ extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapPOIWithPlaceID placeID: String, name: String, location: CLLocationCoordinate2D) {
         print("didTapPOIWithPlaceID: \(placeID), name: \(name), location: \(location)")
         
-//        infoMarker.snippet = placeID
-//        infoMarker.position = location
-//        infoMarker.title = name
-//        infoMarker.opacity = 0;
-//        infoMarker.infoWindowAnchor.y = 1
-//        infoMarker.map = mapView
-//        mapView.selectedMarker = infoMarker
-        
-        
         guard let currentLocation = locationManager.location else {
             print("Current location is nil.")
             return
@@ -221,14 +221,39 @@ extension MapViewController: GMSMapViewDelegate {
         let distance = currentLocation.distance(from: destinationLocation)
         distanceLabel.text = "距你 \(distance.int) 米"
         // 绘制路线
-        getDirections(startLocation: currentLocation, destination: location)
+//        getDirections(startLocation: currentLocation, destination: location)
+        // 选中目的地
+        selectedDestination = (placeID, name, location)
+    }
+    
+}
+
+extension GoogleMapViewController: GMSNavigatorListener {
+    
+    // 到达目的地回调
+    func navigator(_ navigator: GMSNavigator, didArriveAt waypoint: GMSNavigationWaypoint) {
+        mapView.navigator?.continueToNextDestination()
+        mapView.navigator?.isGuidanceActive = true
+        // 绘制路线
+        drawRoute(path: navigator.traveledPath)
+        
+        // 耗时
+        if let start = tripStartTimer {
+            let now = Date()
+            let time = now.timeIntervalSince(start)
+            print("总共耗时：\(time)")
+        }
+        
+        // 行驶的距离
+        let distance = navigator.distance(to: waypoint)
+        print("行驶距离：\(distance)")
     }
     
 }
 
 // MARK: - CLLocationManagerDelegate
 
-extension MapViewController: CLLocationManagerDelegate {
+extension GoogleMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last!
@@ -245,8 +270,6 @@ extension MapViewController: CLLocationManagerDelegate {
         } else {
 //            mapView.animate(to: camera)
         }
-        
-//        listLikelyPlaces()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

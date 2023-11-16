@@ -43,7 +43,6 @@ PODS:
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
-  - GoogleMaps
   - GoogleNavigation
   - GooglePlaces
   - ReachabilitySwift
@@ -78,6 +77,6 @@ SPEC CHECKSUMS:
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: ef48a570afb6f5d97b89882da05cf31b4d994656
+PODFILE CHECKSUM: 4dcee47e2dbf58bd38b5e1693856aff1d02f7b41
 
 COCOAPODS: 1.12.1

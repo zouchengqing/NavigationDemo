@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		07007F0B2B04741700C1FEB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07007F0A2B04741700C1FEB8 /* AppDelegate.swift */; };
 		07007F0D2B04741700C1FEB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07007F0C2B04741700C1FEB8 /* SceneDelegate.swift */; };
-		07007F0F2B04741700C1FEB8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07007F0E2B04741700C1FEB8 /* ViewController.swift */; };
+		07007F0F2B04741700C1FEB8 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07007F0E2B04741700C1FEB8 /* GoogleMapViewController.swift */; };
 		07007F122B04741700C1FEB8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07007F102B04741700C1FEB8 /* Main.storyboard */; };
 		07007F142B04741700C1FEB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07007F132B04741700C1FEB8 /* Assets.xcassets */; };
 		07007F172B04741700C1FEB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07007F152B04741700C1FEB8 /* LaunchScreen.storyboard */; };
@@ -20,7 +20,7 @@
 		07007F072B04741700C1FEB8 /* NavigationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07007F0A2B04741700C1FEB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07007F0C2B04741700C1FEB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		07007F0E2B04741700C1FEB8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		07007F0E2B04741700C1FEB8 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		07007F112B04741700C1FEB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		07007F132B04741700C1FEB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07007F162B04741700C1FEB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 			children = (
 				07007F0A2B04741700C1FEB8 /* AppDelegate.swift */,
 				07007F0C2B04741700C1FEB8 /* SceneDelegate.swift */,
-				07007F0E2B04741700C1FEB8 /* ViewController.swift */,
+				07007F0E2B04741700C1FEB8 /* GoogleMapViewController.swift */,
 				07007F102B04741700C1FEB8 /* Main.storyboard */,
 				07007F132B04741700C1FEB8 /* Assets.xcassets */,
 				07007F152B04741700C1FEB8 /* LaunchScreen.storyboard */,
@@ -88,7 +88,6 @@
 				071B88362371B11EBE4E60CD /* Pods-NavigationDemo.debug.xcconfig */,
 				301DFCA8B2B1006078F02BF5 /* Pods-NavigationDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -225,7 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07007F0F2B04741700C1FEB8 /* ViewController.swift in Sources */,
+				07007F0F2B04741700C1FEB8 /* GoogleMapViewController.swift in Sources */,
 				07007F0B2B04741700C1FEB8 /* AppDelegate.swift in Sources */,
 				07007F0D2B04741700C1FEB8 /* SceneDelegate.swift in Sources */,
 			);
@@ -373,23 +372,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GVY5LY9NZL;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8Z492DM3NH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NavigationDemo/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "允许以使用导航功能";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "允许使用以提供导航功能";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "允许以使用导航功能";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eric.NavigationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ymf_dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -407,17 +413,21 @@
 				DEVELOPMENT_TEAM = GVY5LY9NZL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NavigationDemo/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "允许以使用导航功能";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "允许使用以提供导航功能";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "允许以使用导航功能";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.eric.NavigationDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ynengliang.yuanmofang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
